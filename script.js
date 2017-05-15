@@ -72,13 +72,11 @@ function inicioJogo() {
 
 function render() {
     //jogo.contexto.fillStyle = corRGBA(0, 0, 0, Math.random());
-    /*jogo.contexto.fillStyle = corRGBA(0, 0, 0, 0.2);
+    jogo.contexto.fillStyle = corRGBA(0, 0, 0, 0.2);
     jogo.contexto.fillRect(0, 0, jogo.width, jogo.height);
     jogo.contexto.strokeStyle = "black";
     jogo.contexto.strokeRect(0, 0, jogo.width, jogo.height);
-    sistemaParticulas.draw();*/
-    drawFoods();
-    //clearScreen(200, 100, 100, 100);
+    sistemaParticulas.draw();
 
     //renderSnake();
 
