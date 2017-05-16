@@ -1,7 +1,7 @@
 //link fixe para veres: https://www.youtube.com/watch?v=YCI8uqePkrc
+var testerI = 0;
 var CELL = 30;
-
-var sistemaParticulas;
+//var sistemaParticulas;
 
 var teclado = {
     LEFT: 37,
@@ -49,8 +49,17 @@ function init() {
     setInterval(function() {
         jogo.contexto.fillStyle = "rgba(0,0,0,0.1)";
         jogo.contexto.fillRect(0, 0, jogo.width, jogo.height);
-        sistemaParticulas = new ParticleSystem();
-        sistemaParticulas.draw();
+        //sistemaParticulas = new ParticleSystem();
+        //sistemaParticulas.draw();
+        createFood(jogo.width / 4, jogo.height / 2).draw();
+        if (testerI <= 100) {
+            createFood(100, 500).draw();
+            testerI++;
+        } else
+            apagaParticula(100, 500);
+
+        createPowerDown(jogo.width / 2, jogo.height / 2).draw();
+        createPowerUp(jogo.width / 4 * 3, jogo.height / 2).draw();
     }, 30);
     inicioJogo();
 }
@@ -72,12 +81,12 @@ function inicioJogo() {
 
 function render() {
     //jogo.contexto.fillStyle = corRGBA(0, 0, 0, Math.random());
-    jogo.contexto.fillStyle = corRGBA(0, 0, 0, 0.2);
-    jogo.contexto.fillRect(0, 0, jogo.width, jogo.height);
-    jogo.contexto.strokeStyle = "black";
-    jogo.contexto.strokeRect(0, 0, jogo.width, jogo.height);
-    sistemaParticulas.draw();
-
+    /*    jogo.contexto.fillStyle = corRGBA(0, 0, 0, 0.2);
+        jogo.contexto.fillRect(0, 0, jogo.width, jogo.height);
+        jogo.contexto.strokeStyle = "black";
+        jogo.contexto.strokeRect(0, 0, jogo.width, jogo.height);
+        sistemaParticulas.draw();
+    */
     //renderSnake();
 
     //var score_text = "Pontuacao: " + jogo.pontuacao;

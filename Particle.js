@@ -1,4 +1,5 @@
 //ver: https://www.youtube.com/watch?v=YCI8uqePkrc
+
 var particleIndex = 0;
 var particles = {};
 var numeroDeParticulas = 10;
@@ -51,7 +52,7 @@ class ParticulaCircular extends Particula {
 }
 
 class ParticleSystem {
-    constructor() {
+    constructor(posX, posY, vx, vy, color, maxLife, largura, comprimento) {
         for (var i = 0; i < numeroDeParticulas; i++) {
             if (particleIndex > 1000)
                 particleIndex = 0;
@@ -62,7 +63,7 @@ class ParticleSystem {
             //jogo.contexto.fillStyle = corRGBA(0, 0, 0, Math.random());
             //jogo.contexto.fillRect(0, 0, jogo.width, jogo.height);
 
-            particles[particleIndex] = new ParticulaCircular(jogo.width / 4, jogo.height / 2,
+            /*particles[particleIndex] = new ParticulaCircular(jogo.width / 4, jogo.height / 2,
                 Math.random() * 10 - 5, Math.random() * 10 - 5,
                 corRGBA(rand(250, 180), rand(250, 180), rand(250, 180), Math.random()), Math.floor(Math.random() * 5), 5, 5);
             particles[particleIndex].id = particleIndex;
@@ -77,6 +78,10 @@ class ParticleSystem {
                 corRGBA(rand(250, 180), rand(160, 10), rand(160, 10), Math.random()), Math.floor(Math.random() * 5), 5, 5);
 
             particles[particleIndex].id = particleIndex;
+            particleIndex++;*/
+
+            particles[particleIndex] = new ParticulaCircular(posX, posY, vx, vy, color, maxLife, largura, comprimento);
+            particles[particleIndex].id = particleIndex;
             particleIndex++;
         }
     }
@@ -86,6 +91,28 @@ class ParticleSystem {
             particles[i].draw();
     }
 }
+
+function createFood(posX, posY) {
+    return new ParticleSystem(posX, posY,
+        Math.random() * 10 - 5, Math.random() * 10 - 5,
+        corRGBA(rand(250, 180), rand(250, 180), rand(250, 180), Math.random()),
+        Math.floor(Math.random() * 5), 5, 5);
+}
+
+function createPowerUp(posX, posY) {
+    return new ParticleSystem(posX, posY,
+        Math.random() * 10 - 5, Math.random() * 10 - 5,
+        corRGBA(rand(160, 10), rand(250, 180), rand(160, 10), Math.random()),
+        Math.floor(Math.random() * 5), 5, 5);
+}
+
+function createPowerDown(posX, posY) {
+    return new ParticleSystem(posX, posY,
+        Math.random() * 10 - 5, Math.random() * 10 - 5,
+        corRGBA(rand(250, 180), rand(160, 10), rand(160, 10), Math.random()),
+        Math.floor(Math.random() * 5), 5, 5);
+}
+
 
 function corRGBA(red, green, blue, alpha) {
     return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
@@ -99,4 +126,9 @@ function rand(max, min) {
     min = min ? min : 0;
     max = max ? max : 1;
     return Math.round(Math.random() * max) + min;
+}
+
+function apagaParticula(x, y) {
+    jogo.contexto.fillStyle = "black";
+    jogo.contexto.fillRect(x - 20, y - 20, 40, 40);
 }
