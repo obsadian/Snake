@@ -23,7 +23,7 @@ var jogo = {
 
 var snake = {
     corpo: [],
-    size: 4,
+    size: 12,
     direcao: teclado.RIGHT
 };
 
@@ -48,15 +48,17 @@ function init() {
     setInterval(function() {
         jogo.contexto.fillStyle = "rgba(0,0,0,0.1)";
         jogo.contexto.fillRect(0, 0, jogo.width, jogo.height);
+
+
         //sistemaParticulas = new ParticleSystem();
-        //sistemaParticulas.draw();
+        //sistemaParticulas.draw
         createFood(jogo.width / 4, jogo.height / 2).draw();
         if (testerI <= 100) {
             createFood(100, 500).draw();
             testerI++;
-        } else
-            apagaParticula(100, 500);
-
+        } //else
+        //            apagaParticula(100, 500);
+        renderSnake();
         createPowerDown(jogo.width / 2, jogo.height / 2).draw();
         createPowerUp(jogo.width / 4 * 3, jogo.height / 2).draw();
     }, 30);

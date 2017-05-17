@@ -5,7 +5,7 @@ var particles = {};
 var numeroDeParticulas = 10;
 
 class Particula {
-    constructor(posX, posY, vx, vy, color, maxLife, largura, comprimento) {
+    constructor(posX, posY, vx, vy, color, maxLife, radius) {
         this.id = 0;
         this.posX = posX;
         this.posY = posY;
@@ -13,8 +13,7 @@ class Particula {
         this.vy = vy;
         this.color = color;
         this.maxLife = maxLife;
-        this.largura = largura;
-        this.comprimento = comprimento;
+        this.radius = radius;
 
         this.gravity = 0;
         this.life = 0;
@@ -27,8 +26,11 @@ class Particula {
         this.life++;
         if (this.life >= this.maxLife)
             delete particles[this.id];
+        //        jogo.contexto.beginPath();
+        //        jogo.contexto.arc(posX, posY, radius, 0, 2 * Math.PI, false);
         jogo.contexto.fillStyle = this.color;
-        jogo.contexto.fillRect(this.posX, this.posY, this.largura, this.comprimento);
+        jogo.contexto.fillRect(this.posX, this.posY, this.radius, this.radius);
+        //       jogo.contexto.fill();
     }
 }
 
@@ -45,18 +47,20 @@ class ParticulaCircular extends Particula {
         this.life++;
         if (this.life >= this.maxLife)
             delete particles[this.id];
+        jogo.contexto.beginPath();
+        jogo.contexto.arc(this.posX, this.posY, this.radius, 0, 2 * Math.PI, false);
         jogo.contexto.fillStyle = this.color;
-        jogo.contexto.fillRect(this.posX, this.posY, this.largura, this.comprimento);
+        jogo.contexto.fill();
     }
 
 }
 
 class ParticleSystem {
-    constructor(posX, posY, vx, vy, color, maxLife, largura, comprimento) {
+    constructor(posX, posY, vx, vy, color, maxLife, radius) {
         for (var i = 0; i < numeroDeParticulas; i++) {
             if (particleIndex > 1000)
                 particleIndex = 0;
-            particles[particleIndex] = new ParticulaCircular(posX, posY, vx, vy, color, maxLife, largura, comprimento);
+            particles[particleIndex] = new ParticulaCircular(posX, posY, vx, vy, color, maxLife, radius);
             particles[particleIndex].id = particleIndex;
             particleIndex++;
         }
@@ -68,25 +72,26 @@ class ParticleSystem {
     }
 }
 
+
 function createFood(posX, posY) {
     return new ParticleSystem(posX, posY,
         Math.random() * 10 - 5, Math.random() * 10 - 5,
         corRGBA(rand(250, 180), rand(250, 180), rand(250, 180), Math.random()),
-        Math.floor(Math.random() * 5), 5, 5);
+        Math.floor(Math.random() * 5), 5);
 }
 
 function createPowerUp(posX, posY) {
     return new ParticleSystem(posX, posY,
         Math.random() * 10 - 5, Math.random() * 10 - 5,
         corRGBA(rand(160, 10), rand(250, 180), rand(160, 10), Math.random()),
-        Math.floor(Math.random() * 5), 5, 5);
+        Math.floor(Math.random() * 5), 5);
 }
 
 function createPowerDown(posX, posY) {
     return new ParticleSystem(posX, posY,
         Math.random() * 10 - 5, Math.random() * 10 - 5,
         corRGBA(rand(250, 180), rand(160, 10), rand(160, 10), Math.random()),
-        Math.floor(Math.random() * 5), 5, 5);
+        Math.floor(Math.random() * 5), 5);
 }
 
 
