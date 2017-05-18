@@ -1,5 +1,7 @@
-//link fixe para veres: https://www.youtube.com/watch?v=YCI8uqePkrc
-var testerI = 0;
+//https://www.youtube.com/watch?v=YCI8uqePkrc
+var comida = [];
+var powerUps = [];
+var powerDowns = [];
 var CELL = 30;
 
 var teclado = {
@@ -23,7 +25,8 @@ var jogo = {
 
 var snake = {
     corpo: [],
-    size: 12,
+    size: 4,
+    cleaner: 2,
     direcao: teclado.RIGHT
 };
 
@@ -36,38 +39,38 @@ window.addEventListener("load", init);
 
 function init() {
     canvas = document.getElementById("canvas");
-    //    jogo.width = window.innerWidth * 0.9;
-    //    jogo.height = window.innerHeight * 0.9;
-
-    jogo.width = 1300;
+    jogo.width = 1320;
     jogo.height = 600;
 
     canvas.width = jogo.width;
     canvas.height = jogo.height;
     jogo.contexto = canvas.getContext("2d");
+    var posX = [];
+    var posY = [];
+    inicioJogo();
+    var posicoesXY = [getPosicoes(), getPosicoes(), getPosicoes()];
     setInterval(function() {
         jogo.contexto.fillStyle = "rgba(0,0,0,0.1)";
         jogo.contexto.fillRect(0, 0, jogo.width, jogo.height);
 
+        comida[0] = createFood(posicoesXY[0].posX, posicoesXY[0].posY);
+        powerUps[0] = (createPowerUp(posicoesXY[1].posX, posicoesXY[1].posY));
+        powerDowns[0] = (createPowerDown(posicoesXY[2].posX, posicoesXY[2].posY));
 
-        //sistemaParticulas = new ParticleSystem();
-        //sistemaParticulas.draw
-        createFood(jogo.width / 4, jogo.height / 2).draw();
-        if (testerI <= 100) {
-            createFood(100, 500).draw();
-            testerI++;
-        } //else
-        //            apagaParticula(100, 500);
+        //apagaParticula(100, 500);
+        comida[0].draw();
+        powerUps[0].draw();
+        powerDowns[0].draw();
         renderSnake();
-        createPowerDown(jogo.width / 2, jogo.height / 2).draw();
-        createPowerUp(jogo.width / 4 * 3, jogo.height / 2).draw();
-    }, 30);
+    }, 60);
     inicioJogo();
 }
 
 function inicioJogo() {
     for (var i = snake.size - 1; i >= 0; i--)
         snake.corpo.push({ x: i, y: 0 });
+    for (var i = snake.cleaner - 1; i >= 0; i--)
+        snake.corpo.push({ x: i + snake.size, y: 0 });
 
     if (!jogo.emCurso) clearInterval(jogo.loop);
     jogo.loop = setInterval(render, 120);
@@ -103,21 +106,82 @@ function renderSnake() {
 
 
     //Desenho
-
-    for (var i = 0; i < snake.size; i++) {
-        var c = snake.corpo[i];
+    var c;
+    for (var i = 0; i < snake.size - 1; i++) {
+        c = snake.corpo[i];
         jogo.contexto.fillStyle = "#00FFFF";
         jogo.contexto.fillRect(c.x * (CELL), c.y * (CELL), CELL, CELL);
         jogo.contexto.strokeStyle = "black";
         jogo.contexto.strokeRect(c.x * (CELL), c.y * (CELL), CELL, CELL);
+        console.log("Quadrado " + (i + 1) + ": posicao X: " + c.x + ", posicao Y: " + c.y);
+    }
+    for (var i = 0; i < snake.cleaner; i++) {
+        c = snake.corpo[snake.size + i];
+        jogo.contexto.fillStyle = "rgba(0,0,0,0.5)";
+        jogo.contexto.fillRect(c.x * (CELL), c.y * (CELL), CELL, CELL);
     }
 
 }
 
 
 function _onKeyDown(e) {
+    var novaDirecao;
     var tecla = e.keyCode;
     if (tecla == teclado.DOWN || tecla == teclado.UP || tecla == teclado.LEFT || tecla == teclado.RIGHT)
-        snake.direcao = tecla;
+        novaDirecao = tecla;
+    if (!(snake.direcao == teclado.RIGHT && novaDirecao == teclado.LEFT ||
+            snake.direcao == teclado.LEFT && novaDirecao == teclado.RIGHT ||
+            snake.direcao == teclado.UP && novaDirecao == teclado.DOWN ||
+            snake.direcao == teclado.DOWN && novaDirecao == teclado.UP))
+        snake.direcao = novaDirecao;
     render();
+}
+
+function getPosicoes() {
+    var posX = (rand(Math.round(jogo.width / CELL), 1) - 1) * CELL + CELL / 2;
+    var posY = rand(Math.round(jogo.height / CELL), 1) * CELL + CELL / 2;
+    while (estaOcupado(posX, posY)) {
+        posX = (rand(Math.round(jogo.width / CELL), 1) - 1) * CELL + CELL / 2;
+        posY = rand(Math.round(jogo.height / CELL), 1) * CELL + CELL / 2;
+    }
+    return { posX, posY };
+}
+
+function estaOcupado(x, y) {
+    for (var i = 0; i < comida.length; i++)
+        if (comida[i].x == x && comida[i].y == y)
+            return true;
+    for (var i = 0; i < powerUps.length; i++)
+        if (powerUps[i].x == x && powerUps[i].y == y)
+            return true;
+    for (var i = 0; i < powerDowns.length; i++)
+        if (powerDowns[i].x == x && powerDowns[i].y == y)
+            return true;
+    for (var i = 0; i < snake.size; i++)
+        if (snake.corpo[i].x == x && snake.corpo[i].y == y)
+            return true;
+
+    return false;
+}
+
+function comi() {
+    var x = snake.corpo[0].x;
+    var y = snake.corpo[0].y;
+    for (var i = 0; i < comida.length; i++)
+        if (comida[i].x == x && comida[i].y == y)
+            return camida[i];
+    for (var i = 0; i < powerUps.length; i++)
+        if (powerUps[i].x == x && powerUps[i].y == y)
+            return powerUps[i];
+    for (var i = 0; i < powerDowns.length; i++)
+        if (powerDowns[i].x == x && powerDowns[i].y == y)
+            return powerDowns[i];
+    return undefined;
+}
+
+function snakeOnLimit() {
+    if (snake.corpo[0].x <= 0)
+        snake.corpo[0].x = jogo.width;
+    if (snake.corpo[0].x >= jogo.width)
+        snake.corpo[0].x = 0;
 }
