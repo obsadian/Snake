@@ -61,8 +61,9 @@ function init() {
         comida[0].draw();
         powerUps[0].draw();
         powerDowns[0].draw();
+        snakeOnLimit();
         renderSnake();
-    }, 60);
+    }, 600);
     inicioJogo();
 }
 
@@ -113,7 +114,6 @@ function renderSnake() {
         jogo.contexto.fillRect(c.x * (CELL), c.y * (CELL), CELL, CELL);
         jogo.contexto.strokeStyle = "black";
         jogo.contexto.strokeRect(c.x * (CELL), c.y * (CELL), CELL, CELL);
-        console.log("Quadrado " + (i + 1) + ": posicao X: " + c.x + ", posicao Y: " + c.y);
     }
     for (var i = 0; i < snake.cleaner; i++) {
         c = snake.corpo[snake.size + i];
@@ -180,8 +180,11 @@ function comi() {
 }
 
 function snakeOnLimit() {
-    if (snake.corpo[0].x <= 0)
-        snake.corpo[0].x = jogo.width;
-    if (snake.corpo[0].x >= jogo.width)
-        snake.corpo[0].x = 0;
+    if (snake.corpo[0].y == 0 && snake.direcao == teclado.UP)
+        snake.corpo[0].y = jogo.height / CELL;
+
+
+    if (snake.corpo[0].y >= jogo.height / CELL - 1 && snake.direcao == teclado.DOWN)
+        snake.corpo[0].y = -1;
+    console.log(snake.corpo[0].y);
 }
