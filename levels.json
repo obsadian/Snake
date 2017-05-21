@@ -1,0 +1,85 @@
+{
+    "1": {
+        "background": null,
+        "speed": 1,
+        "music": ".mp3",
+        "snake_size": 1,
+        "food_color": "#white",
+        "power_up_color": "green",
+        "power_down_color": "red",
+
+        "food_sound_popUp": ".mp3",
+        "power_up_sound_popUp": ".mp3",
+        "power_down_sound_popUp": ".mp3",
+
+        "food_sound_eat": ".mp3",
+        "power_up_sound_eat": ".mp3",
+        "power_down_sound_eat": ".mp3",
+
+        "game_over_sound": ".mp3",
+        "level_up_sound": ".mp3"
+    },
+
+    "2": {
+        "background": null,
+        "speed": 1,
+        "music": ".mp3",
+        "snake_size": 1,
+        "food_color": "#white",
+        "power_up_color": "green",
+        "power_down_color": "red",
+
+        "food_sound_popUp": ".mp3",
+        "power_up_sound_popUp": ".mp3",
+        "power_down_sound_popUp": ".mp3",
+
+        "food_sound_eat": ".mp3",
+        "power_up_sound_eat": ".mp3",
+        "power_down_sound_eat": ".mp3",
+
+        "game_over_sound": ".mp3",
+        "level_up_sound": ".mp3"
+    },
+
+    "3": {
+        "background": null,
+        "speed": 1,
+        "music": ".mp3",
+        "snake_size": 1,
+        "food_color": "#white",
+        "power_up_color": "green",
+        "power_down_color": "red",
+
+        "food_sound_popUp": ".mp3",
+        "power_up_sound_popUp": ".mp3",
+        "power_down_sound_popUp": ".mp3",
+
+        "food_sound_eat": ".mp3",
+        "power_up_sound_eat": ".mp3",
+        "power_down_sound_eat": ".mp3",
+
+        "game_over_sound": ".mp3",
+        "level_up_sound": ".mp3"
+    },
+
+    "4": {
+        "background": null,
+        "speed": 1,
+        "music": ".mp3",
+        "snake_size": 1,
+        "food_color": "#white",
+        "power_up_color": "green",
+        "power_down_color": "red",
+
+        "food_sound_popUp": ".mp3",
+        "power_up_sound_popUp": ".mp3",
+        "power_down_sound_popUp": ".mp3",
+
+        "food_sound_eat": ".mp3",
+        "power_up_sound_eat": ".mp3",
+        "power_down_sound_eat": ".mp3",
+
+        "game_over_sound": ".mp3",
+        "level_up_sound": ".mp3"
+    }
+}
