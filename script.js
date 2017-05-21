@@ -145,7 +145,6 @@ function renderSnake() {
         //jogo.contexto.fillRect(c.x * (CELL), c.y * (CELL), CELL, CELL);
 
     }
-
 }
 
 function drawBackground() {
@@ -154,25 +153,22 @@ function drawBackground() {
     img.addEventListener('load', function () {
         // execute drawImage statements here
     }, false);
-    img.src = 'back.png';
+    img.src = 'back3.png';
     for (var i=0; i < 30; i++) {
         jogo.contexto.drawImage(img, 0, 50*i, 50, 50);
         jogo.contexto.drawImage(img, 50*i, 0, 50, 50);
         jogo.contexto.drawImage(img, canvas.width-50, 50*i, 50, 50);
         jogo.contexto.drawImage(img, 50*i,canvas.height-50, 50, 50);
-        
     }
 }
 
 function loadBody() {
-    
     var n = getRandom(1,12);
     var img = new Image();
     img.addEventListener('load', function () {}, false);
     img.src = 'c' + n + '.png';
     console.log("random" + n + "//");
     return img;
-
 }
 
 function getRandom(min, max) {
